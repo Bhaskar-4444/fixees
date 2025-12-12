@@ -1,5 +1,28 @@
 /* app.js (Updated: Pricing to ₹50, removed search bar, updated policy text) */
 // Navigation History Stack for Back Button
+
+(function() {
+    emailjs.init("r2k2iFDGY-gvJxwU2"); 
+})();
+async function sendAdminNotification(booking) {
+  try {
+    await emailjs.send("service_fsspcqk", "template_xsxubbq", {
+      provider_name: booking.providerName,
+      service_name: booking.serviceName,
+      date: booking.date,
+      time: booking.time,
+      phone: booking.phone,
+      location: booking.location,
+      instructions: booking.instructions || "None",
+      user_id: appState.user.uid
+    });
+
+    console.log("Admin email sent");
+  } catch (err) {
+    console.error("EmailJS error:", err);
+  }
+}
+
 let navHistory = ['home']; // Initialize with home
 // Update history on navigation
 function updateNavHistory(page) {
